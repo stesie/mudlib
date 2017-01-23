@@ -1,0 +1,12 @@
+{
+  "name": "stesie/mudlib",
+  "description": "CORS Multi User Dungeon Library",
+  "minimum-stability": "alpha",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Stefan Siegl",
+      "email": "stesie@brokenpipe.de"
+    }
+  ]
+}
