@@ -27,4 +27,9 @@ class PlayerNicknameChangedDomainEvent implements DomainEvent
     {
         return $this->id;
     }
+
+    public function getNickname(): string
+    {
+        return $this->nickname;
+    }
 }
