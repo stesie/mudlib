@@ -22,7 +22,7 @@ class Room
     public static function create(RoomId $id)
     {
         $inst = new static($id);
-        $inst->recordEvent(new RoomWasCreatedDomainEvent($id));
+        $inst->recordThat(new RoomWasCreatedDomainEvent($id));
         return $inst;
     }
 }

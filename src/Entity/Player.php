@@ -6,7 +6,7 @@ use stesie\mudlib\Event\PlayerNicknameChangedDomainEvent;
 use stesie\mudlib\Event\PlayerWasCreatedDomainEvent;
 use stesie\mudlib\ValueObject\PlayerId;
 
-class Player
+class Player implements RecordsEvents
 {
     use EventRecorder;
 
@@ -28,13 +28,13 @@ class Player
     public static function create(PlayerId $id)
     {
         $inst = new static($id);
-        $inst->recordEvent(new PlayerWasCreatedDomainEvent($id));
+        $inst->recordThat(new PlayerWasCreatedDomainEvent($id));
         return $inst;
     }
 
     public function setNickname(string $nickname)
     {
         $this->nickname = $nickname;
-        $this->recordEvent(new PlayerNicknameChangedDomainEvent($this->id, $nickname));
+        $this->recordThat(new PlayerNicknameChangedDomainEvent($this->id, $nickname));
     }
 }
