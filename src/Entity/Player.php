@@ -2,8 +2,8 @@
 
 namespace stesie\mudlib\Entity;
 
-use stesie\mudlib\Event\PlayerNicknameChangedEvent;
-use stesie\mudlib\Event\PlayerWasCreatedEvent;
+use stesie\mudlib\Event\PlayerNicknameChangedDomainEvent;
+use stesie\mudlib\Event\PlayerWasCreatedDomainEvent;
 use stesie\mudlib\ValueObject\PlayerId;
 
 class Player
@@ -28,13 +28,13 @@ class Player
     public static function create(PlayerId $id)
     {
         $inst = new static($id);
-        $inst->recordEvent(new PlayerWasCreatedEvent($id));
+        $inst->recordEvent(new PlayerWasCreatedDomainEvent($id));
         return $inst;
     }
 
     public function setNickname(string $nickname)
     {
         $this->nickname = $nickname;
-        $this->recordEvent(new PlayerNicknameChangedEvent($this->id, $nickname));
+        $this->recordEvent(new PlayerNicknameChangedDomainEvent($this->id, $nickname));
     }
 }

@@ -2,7 +2,7 @@
 
 namespace stesie\mudlib\Event;
 
-interface Event
+interface DomainEvent
 {
 
 }
