@@ -2,6 +2,7 @@
 
 namespace stesie\mudlib\Event;
 
+use stesie\mudlib\ValueObject\Id;
 use stesie\mudlib\ValueObject\RoomId;
 
 class RoomWasCreatedDomainEvent implements DomainEvent
@@ -14,5 +15,10 @@ class RoomWasCreatedDomainEvent implements DomainEvent
     public function __construct(RoomId $id)
     {
         $this->id = $id;
+    }
+
+    public function getAggregateId(): Id
+    {
+        return $this->id;
     }
 }

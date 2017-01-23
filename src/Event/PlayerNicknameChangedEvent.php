@@ -2,7 +2,7 @@
 
 namespace stesie\mudlib\Event;
 
-
+use stesie\mudlib\ValueObject\Id;
 use stesie\mudlib\ValueObject\PlayerId;
 
 class PlayerNicknameChangedDomainEvent implements DomainEvent
@@ -21,5 +21,10 @@ class PlayerNicknameChangedDomainEvent implements DomainEvent
     {
         $this->id = $id;
         $this->nickname = $nickname;
+    }
+
+    public function getAggregateId(): Id
+    {
+        return $this->id;
     }
 }
