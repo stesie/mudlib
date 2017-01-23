@@ -8,5 +8,10 @@
       "name": "Stefan Siegl",
       "email": "stesie@brokenpipe.de"
     }
-  ]
+  ],
+  "autoload": {
+    "psr-4": {
+      "stesie\\mudlib\\": "src"
+    }
+  }
 }
