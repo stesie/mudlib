@@ -2,7 +2,7 @@
 
 namespace stesie\mudlib\Entity;
 
-use stesie\mudlib\Event\RoomWasCreatedDomainEvent;
+use stesie\mudlib\Event\RoomWasCreatedEvent;
 use stesie\mudlib\ValueObject\RoomId;
 
 class Room
@@ -22,7 +22,7 @@ class Room
     public static function create(RoomId $id)
     {
         $inst = new static($id);
-        $inst->recordThat(new RoomWasCreatedDomainEvent($id));
+        $inst->recordThat(new RoomWasCreatedEvent($id));
         return $inst;
     }
 }
