@@ -25,4 +25,12 @@ class Room
         $inst->recordThat(new RoomWasCreatedEvent($id));
         return $inst;
     }
+
+    /**
+     * @return RoomId
+     */
+    public function getId(): RoomId
+    {
+        return $this->id;
+    }
 }
