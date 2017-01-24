@@ -18,11 +18,13 @@ final class CreateRoomCommand
         $this->eventStore = $eventStore;
     }
 
-    public function run()
+    public function run(): Room
     {
         $room = Room::create(RoomId::generate());
 
         $this->eventStore->storeEvents($room->getRecordedEvents());
-        //$room->clearRecordedEvents();
+        $room->clearRecordedEvents();
+
+        return $room;
     }
 }
