@@ -21,6 +21,13 @@ final class Area
 
     private function __construct(Point $origin, int $width, int $height)
     {
+        if ($width < 1) {
+            throw new \InvalidArgumentException('$width must be a positive integer');
+        }
+
+        if ($height < 1) {
+            throw new \InvalidArgumentException('$width must be a positive integer');
+        }
 
         $this->origin = $origin;
         $this->width = $width;
