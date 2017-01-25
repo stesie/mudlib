@@ -2,6 +2,8 @@
 
 namespace stesie\mudlib;
 
+use Predis\ClientInterface;
+
 class Kernel
 {
     /**
@@ -9,9 +11,15 @@ class Kernel
      */
     private $eventBus;
 
-    public function __construct(EventBusInterface $eventBus)
+    /**
+     * @var ClientInterface
+     */
+    private $redis;
+
+    public function __construct(EventBusInterface $eventBus, ClientInterface $redis)
     {
         $this->eventBus = $eventBus;
+        $this->redis = $redis;
     }
 
     public function boot()
