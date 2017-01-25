@@ -6,7 +6,7 @@ use stesie\mudlib\Event\PlayerNicknameChangedEvent;
 use stesie\mudlib\Event\PlayerWasCreatedEvent;
 use stesie\mudlib\ValueObject\PlayerId;
 
-class Player implements RecordsEvents
+final class Player implements RecordsEvents
 {
     use EventRecorder;
 

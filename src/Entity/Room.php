@@ -6,7 +6,7 @@ use stesie\mudlib\Event\RoomWasCreatedEvent;
 use stesie\mudlib\ValueObject\Area;
 use stesie\mudlib\ValueObject\RoomId;
 
-class Room
+final class Room
 {
     use EventRecorder;
 

@@ -2,7 +2,7 @@
 
 namespace stesie\mudlib\ValueObject;
 
-class Area
+final class Area
 {
     /**
      * @var Point
