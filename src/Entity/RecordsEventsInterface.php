@@ -2,12 +2,12 @@
 
 namespace stesie\mudlib\Entity;
 
-use stesie\mudlib\Event\DomainEvent;
+use stesie\mudlib\Event\DomainEventInterface;
 
-interface RecordsEvents
+interface RecordsEventsInterface
 {
     /**
-     * @return DomainEvent[]
+     * @return DomainEventInterface[]
      */
     public function getRecordedEvents(): array;
 

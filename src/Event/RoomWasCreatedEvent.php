@@ -6,7 +6,7 @@ use stesie\mudlib\ValueObject\Area;
 use stesie\mudlib\ValueObject\Id;
 use stesie\mudlib\ValueObject\RoomId;
 
-final class RoomWasCreatedEvent implements DomainEvent
+final class RoomWasCreatedEvent implements DomainEventInterface
 {
     /**
      * @var RoomId

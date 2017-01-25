@@ -5,7 +5,7 @@ namespace stesie\mudlib\Event;
 use stesie\mudlib\ValueObject\Id;
 use stesie\mudlib\ValueObject\PlayerId;
 
-final class PlayerNicknameChangedEvent implements DomainEvent
+final class PlayerNicknameChangedEvent implements DomainEventInterface
 {
     /**
      * @var PlayerId

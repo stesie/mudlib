@@ -4,7 +4,7 @@ namespace stesie\mudlib\Event;
 
 use stesie\mudlib\ValueObject\Id;
 
-interface DomainEvent
+interface DomainEventInterface
 {
     public function getAggregateId(): Id;
 }

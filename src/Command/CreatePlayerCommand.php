@@ -3,17 +3,17 @@
 namespace stesie\mudlib\Command;
 
 use stesie\mudlib\Entity\Player;
-use stesie\mudlib\EventStore;
+use stesie\mudlib\EventStoreInterface;
 use stesie\mudlib\ValueObject\PlayerId;
 
 final class CreatePlayerCommand
 {
     /**
-     * @var EventStore
+     * @var EventStoreInterface
      */
     private $eventStore;
 
-    public function __construct(EventStore $eventStore)
+    public function __construct(EventStoreInterface $eventStore)
     {
         $this->eventStore = $eventStore;
     }

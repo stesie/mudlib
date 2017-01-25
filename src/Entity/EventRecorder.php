@@ -3,17 +3,17 @@
 namespace stesie\mudlib\Entity;
 
 
-use stesie\mudlib\Event\DomainEvent;
+use stesie\mudlib\Event\DomainEventInterface;
 
 trait EventRecorder
 {
     /**
-     * @var DomainEvent[]
+     * @var DomainEventInterface[]
      */
     private $recordedEvents = [];
 
     /**
-     * @return DomainEvent[]
+     * @return DomainEventInterface[]
      */
     public function getRecordedEvents(): array
     {
@@ -25,7 +25,7 @@ trait EventRecorder
         $this->recordedEvents = [];
     }
 
-    private function recordThat(DomainEvent $event)
+    private function recordThat(DomainEventInterface $event)
     {
         $this->recordedEvents[] = $event;
     }
