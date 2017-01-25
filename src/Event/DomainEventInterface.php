@@ -2,9 +2,9 @@
 
 namespace stesie\mudlib\Event;
 
-use stesie\mudlib\ValueObject\Id;
+use stesie\mudlib\ValueObject\AbstractId;
 
 interface DomainEventInterface
 {
-    public function getAggregateId(): Id;
+    public function getAggregateId(): AbstractId;
 }

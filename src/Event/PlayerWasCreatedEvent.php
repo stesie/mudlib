@@ -2,7 +2,7 @@
 
 namespace stesie\mudlib\Event;
 
-use stesie\mudlib\ValueObject\Id;
+use stesie\mudlib\ValueObject\AbstractId;
 use stesie\mudlib\ValueObject\PlayerId;
 
 final class PlayerWasCreatedEvent implements DomainEventInterface
@@ -17,7 +17,7 @@ final class PlayerWasCreatedEvent implements DomainEventInterface
         $this->id = $id;
     }
 
-    public function getAggregateId(): Id
+    public function getAggregateId(): AbstractId
     {
         return $this->id;
     }

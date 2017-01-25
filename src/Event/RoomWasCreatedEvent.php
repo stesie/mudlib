@@ -3,7 +3,7 @@
 namespace stesie\mudlib\Event;
 
 use stesie\mudlib\ValueObject\Area;
-use stesie\mudlib\ValueObject\Id;
+use stesie\mudlib\ValueObject\AbstractId;
 use stesie\mudlib\ValueObject\RoomId;
 
 final class RoomWasCreatedEvent implements DomainEventInterface
@@ -24,7 +24,7 @@ final class RoomWasCreatedEvent implements DomainEventInterface
         $this->area = $area;
     }
 
-    public function getAggregateId(): Id
+    public function getAggregateId(): AbstractId
     {
         return $this->id;
     }

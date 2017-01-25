@@ -2,7 +2,7 @@
 
 namespace stesie\mudlib\ValueObject;
 
-abstract class Id
+abstract class AbstractId
 {
     /**
      * @var string

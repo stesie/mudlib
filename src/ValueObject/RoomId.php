@@ -2,6 +2,6 @@
 
 namespace stesie\mudlib\ValueObject;
 
-final class RoomId extends Id
+final class RoomId extends AbstractId
 {
 }

@@ -2,7 +2,7 @@
 
 namespace stesie\mudlib\Event;
 
-use stesie\mudlib\ValueObject\Id;
+use stesie\mudlib\ValueObject\AbstractId;
 use stesie\mudlib\ValueObject\PlayerId;
 
 final class PlayerNicknameChangedEvent implements DomainEventInterface
@@ -23,7 +23,7 @@ final class PlayerNicknameChangedEvent implements DomainEventInterface
         $this->nickname = $nickname;
     }
 
-    public function getAggregateId(): Id
+    public function getAggregateId(): AbstractId
     {
         return $this->id;
     }

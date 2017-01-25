@@ -2,6 +2,6 @@
 
 namespace stesie\mudlib\ValueObject;
 
-final class PlayerId extends Id
+final class PlayerId extends AbstractId
 {
 }
