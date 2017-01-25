@@ -2,10 +2,9 @@
 
 namespace stesie\mudlib\Entity;
 
-
 use stesie\mudlib\Event\DomainEventInterface;
 
-trait EventRecorder
+trait EventRecorderTrait
 {
     /**
      * @var DomainEventInterface[]

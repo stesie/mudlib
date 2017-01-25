@@ -8,7 +8,7 @@ use stesie\mudlib\ValueObject\RoomId;
 
 final class Room
 {
-    use EventRecorder;
+    use EventRecorderTrait;
 
     /**
      * @var RoomId

@@ -8,7 +8,7 @@ use stesie\mudlib\ValueObject\PlayerId;
 
 final class Player implements RecordsEventsInterface
 {
-    use EventRecorder;
+    use EventRecorderTrait;
 
     /**
      * @var PlayerId
