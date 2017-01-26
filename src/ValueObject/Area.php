@@ -2,7 +2,10 @@
 
 namespace stesie\mudlib\ValueObject;
 
-final class Area
+/**
+ * Simple area class, that resembles a collection of enclosed Point objects, that may be traversed.
+ */
+final class Area implements \IteratorAggregate
 {
     /**
      * @var Point
@@ -59,8 +62,22 @@ final class Area
         return $this->height;
     }
 
-    function __toString(): string
+    public function __toString(): string
     {
         return sprintf("Area[%ux%u+%u+%u", $this->width, $this->height, $this->origin->getX(), $this->origin->getY());
+    }
+
+    public function getIterator(): \Iterator
+    {
+        $minY = $this->origin->getY();
+        $maxY = $this->origin->getY() + $this->height;
+        $minX = $this->getOrigin()->getX();
+        $maxX = $this->origin->getX() + $this->width;
+
+        for ($y = $minY; $y < $maxY; $y++) {
+            for ($x = $minX; $x < $maxX; $x++) {
+                yield Point::create($x, $y);
+            }
+        }
     }
 }
