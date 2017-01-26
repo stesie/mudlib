@@ -3,6 +3,8 @@
 namespace stesie\mudlib;
 
 use Predis\ClientInterface;
+use stesie\mudlib\Event\RoomWasCreatedEvent;
+use stesie\mudlib\Projector\DungeonMapProjector;
 
 class Kernel
 {
@@ -24,6 +26,7 @@ class Kernel
 
     public function boot()
     {
-        //$this->eventBus->subscribe(RoomWasCreatedEvent::class, function() { echo "gotcha!"; });
+        $this->eventBus->subscribe(RoomWasCreatedEvent::class,
+            [ new DungeonMapProjector($this->redis), 'handleRoomWasCreatedEvent' ]);
     }
 }
