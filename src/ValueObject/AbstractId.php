@@ -29,4 +29,9 @@ abstract class AbstractId
     {
         return $this->id;
     }
+
+    public function getId(): string
+    {
+        return $this->id;
+    }
 }
