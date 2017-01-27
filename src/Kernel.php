@@ -6,6 +6,7 @@ use Predis\ClientInterface;
 use stesie\mudlib\Event\MazeTileWasCreatedEvent;
 use stesie\mudlib\Event\RoomWasCreatedEvent;
 use stesie\mudlib\Projector\DungeonMapProjector;
+use stesie\mudlib\Projector\GateProjector;
 
 class Kernel
 {
@@ -31,5 +32,9 @@ class Kernel
 
         $this->eventBus->subscribe(RoomWasCreatedEvent::class, [$dungeonMapProjector, 'handleRoomWasCreatedEvent' ]);
         $this->eventBus->subscribe(MazeTileWasCreatedEvent::class, [$dungeonMapProjector, 'handleMazeTileWasCreatedEvent' ]);
+
+        $gateProjector = new GateProjector($this->redis);
+        $this->eventBus->subscribe(RoomWasCreatedEvent::class, [$gateProjector, 'handleRoomWasCreatedEvent']);
+        $this->eventBus->subscribe(MazeTileWasCreatedEvent::class, [$gateProjector, 'handleMazeTileWasCreatedEvent']);
     }
 }
