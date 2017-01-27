@@ -70,14 +70,24 @@ final class Area implements \IteratorAggregate
     public function getIterator(): \Iterator
     {
         $minY = $this->origin->getY();
-        $maxY = $this->origin->getY() + $this->height;
+        $maxY = $this->getBottomEdgeY();
         $minX = $this->getOrigin()->getX();
-        $maxX = $this->origin->getX() + $this->width;
+        $maxX = $this->getRightEdgeX();
 
-        for ($y = $minY; $y < $maxY; $y++) {
-            for ($x = $minX; $x < $maxX; $x++) {
+        for ($y = $minY; $y <= $maxY; $y++) {
+            for ($x = $minX; $x <= $maxX; $x++) {
                 yield Point::create($x, $y);
             }
         }
+    }
+
+    private function getRightEdgeX(): int
+    {
+        return $this->getOrigin()->getX() + $this->width - 1;
+    }
+
+    private function getBottomEdgeY(): int
+    {
+        return $this->origin->getY() + $this->height - 1;
     }
 }
