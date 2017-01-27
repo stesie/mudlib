@@ -81,6 +81,23 @@ final class Area implements \IteratorAggregate
         }
     }
 
+    public function directionOfPoint(Point $point)
+    {
+        if ($point->getX() > $this->getRightEdgeX())
+            return 'east';
+
+        if ($point->getY() > $this->getBottomEdgeY())
+            return 'south';
+
+        if ($point->getX() < $this->origin->getX())
+            return 'west';
+
+        if ($point->getY() < $this->origin->getY())
+            return 'north';
+
+        throw new \LogicException('Point is within Area');
+    }
+
     private function getRightEdgeX(): int
     {
         return $this->getOrigin()->getX() + $this->width - 1;

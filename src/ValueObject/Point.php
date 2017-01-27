@@ -39,4 +39,21 @@ final class Point
     {
         return sprintf("Point(%u, %u)", $this->x, $this->y);
     }
+
+    public function directionOfPoint(Point $point)
+    {
+        if ($point->x > $this->x)
+            return 'east';
+
+        if ($point->y > $this->y)
+            return 'south';
+
+        if ($point->x < $this->x)
+            return 'west';
+
+        if ($point->y < $this->y)
+            return 'north';
+
+        throw new \LogicException('Points are equal');
+    }
 }
