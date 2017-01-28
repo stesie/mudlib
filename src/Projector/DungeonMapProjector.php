@@ -5,6 +5,7 @@ namespace stesie\mudlib\Projector;
 use Predis\ClientInterface;
 use stesie\mudlib\Event\MazeTileWasCreatedEvent;
 use stesie\mudlib\Event\RoomWasCreatedEvent;
+use stesie\mudlib\ValueObject\DungeonMapTile;
 use stesie\mudlib\ValueObject\Point;
 
 class DungeonMapProjector
@@ -27,10 +28,10 @@ class DungeonMapProjector
     public function handleMazeTileWasCreatedEvent(MazeTileWasCreatedEvent $domainEvent)
     {
         $point = $domainEvent->getPoint();
-        $value = serialize([
-            'usage' => 'MazeTile',
-            'aggregateId' => $domainEvent->getAggregateId()->getId(),
-        ]);
+        $value = (new DungeonMapTile())
+            ->setUsage('MazeTile')
+            ->setAggregateId($domainEvent->getAggregateId())
+            ->serialize();
 
         $key = sprintf('dungeonMap$%s:%s', $point->getX(), $point->getY());
         $this->redis->set($key, $value);
@@ -38,10 +39,10 @@ class DungeonMapProjector
 
     private function markRoomsAreaInMap(RoomWasCreatedEvent $domainEvent)
     {
-        $value = serialize([
-            'usage' => 'Room',
-            'aggregateId' => $domainEvent->getAggregateId()->getId(),
-        ]);
+        $value = (new DungeonMapTile())
+            ->setUsage('Room')
+            ->setAggregateId($domainEvent->getAggregateId())
+            ->serialize();
 
         foreach($domainEvent->getArea() as $point) {
             /** @var Point $point */

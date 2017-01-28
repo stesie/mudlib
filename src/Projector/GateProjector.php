@@ -7,6 +7,7 @@ use stesie\mudlib\Event\MazeTileWasCreatedEvent;
 use stesie\mudlib\Event\RoomWasCreatedEvent;
 use stesie\mudlib\Tools\PointsAroundAreaIterator;
 use stesie\mudlib\Tools\PointsAroundPointIterator;
+use stesie\mudlib\ValueObject\DungeonMapTile;
 use stesie\mudlib\ValueObject\Point;
 
 class GateProjector
@@ -38,9 +39,10 @@ class GateProjector
                 continue;  // ignore empty tile
             }
 
-            $value = unserialize($value);
+            $dungeonMapTile = new DungeonMapTile();
+            $dungeonMapTile->unserialize($value);
 
-            if ('MazeTile' !== $value['usage']) {
+            if ('MazeTile' !== $dungeonMapTile->getUsage()) {
                 continue;
             }
 
@@ -48,7 +50,7 @@ class GateProjector
 
             $key = sprintf('gate$%s:%s', $domainEvent->getAggregateId()->getId(), $direction);
             $this->redis->set($key, serialize([
-                'mazeTileId' => $value['aggregateId'],
+                'mazeTileId' => $dungeonMapTile->getAggregateId()->getId(),
             ]));
         }
     }
@@ -70,15 +72,16 @@ class GateProjector
                 continue;  // ignore empty tile
             }
 
-            $value = unserialize($value);
+            $dungeonMapTile = new DungeonMapTile();
+            $dungeonMapTile->unserialize($value);
 
-            if ('Room' !== $value['usage']) {
+            if ('Room' !== $dungeonMapTile->getUsage()) {
                 continue;
             }
 
             $direction = $point->directionOfPoint($domainEvent->getPoint());
 
-            $key = sprintf('gate$%s:%s', $value['aggregateId'], $direction);
+            $key = sprintf('gate$%s:%s', $dungeonMapTile->getAggregateId()->getId(), $direction);
             $this->redis->set($key, serialize([
                 'mazeTileId' => $domainEvent->getAggregateId()->getId(),
             ]));
