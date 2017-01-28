@@ -22,25 +22,37 @@ class GateProjector
         $this->redis = $redis;
     }
 
-    public function handleRoomWasCreatedEvent(RoomWasCreatedEvent $domainEvent)
+    /**
+     * @param Point[] $points
+     * @return \Generator
+     */
+    private function findDungeonMapTiles($points): \Generator
     {
-        // iterate tiles around room
-        /** @var Point[] $pointsAroundRoom */
-        $pointsAroundRoom = iterator_to_array(new PointsAroundAreaIterator($domainEvent->getArea()));
         $keys = array_map(function(Point $point) {
             return sprintf('dungeonMap$%s:%s', $point->getX(), $point->getY());
-        }, $pointsAroundRoom);
+        }, $points);
 
-        // find maze tiles
         foreach($this->redis->mget($keys) as $i => $value) {
-            $point = $pointsAroundRoom[$i];
+            $point = $points[$i];
 
-            if (!$value) {
+            if ($value) {
+                $dungeonMapTile = new DungeonMapTile();
+                $dungeonMapTile->unserialize($value);
+                yield $point => $dungeonMapTile;
+            }
+            else {
+                yield $point => null;
+            }
+        }
+    }
+
+    public function handleRoomWasCreatedEvent(RoomWasCreatedEvent $domainEvent)
+    {
+        $points = iterator_to_array(new PointsAroundAreaIterator($domainEvent->getArea()));
+        foreach($this->findDungeonMapTiles($points) as $point => $dungeonMapTile) {
+            if (!$dungeonMapTile) {
                 continue;  // ignore empty tile
             }
-
-            $dungeonMapTile = new DungeonMapTile();
-            $dungeonMapTile->unserialize($value);
 
             if ('MazeTile' !== $dungeonMapTile->getUsage()) {
                 continue;
@@ -57,23 +69,11 @@ class GateProjector
 
     public function handleMazeTileWasCreatedEvent(MazeTileWasCreatedEvent $domainEvent)
     {
-        // iterate around maze tile to find a room
-        /** @var Point[] $pointsAroundPoint */
-        $pointsAroundPoint = iterator_to_array(new PointsAroundPointIterator($domainEvent->getPoint()));
-        $keys = array_map(function(Point $point) {
-            return sprintf('dungeonMap$%s:%s', $point->getX(), $point->getY());
-        }, $pointsAroundPoint);
-
-        // find room tiles
-        foreach($this->redis->mget($keys) as $i => $value) {
-            $point = $pointsAroundPoint[$i];
-
-            if (!$value) {
+        $points = iterator_to_array(new PointsAroundPointIterator($domainEvent->getPoint()));
+        foreach($this->findDungeonMapTiles($points) as $point => $dungeonMapTile) {
+            if (!$dungeonMapTile) {
                 continue;  // ignore empty tile
             }
-
-            $dungeonMapTile = new DungeonMapTile();
-            $dungeonMapTile->unserialize($value);
 
             if ('Room' !== $dungeonMapTile->getUsage()) {
                 continue;
