@@ -30,24 +30,28 @@ class DungeonMapProjector
         $point = $domainEvent->getPoint();
         $value = (new DungeonMapTile())
             ->setUsage('MazeTile')
-            ->setAggregateId($domainEvent->getAggregateId())
-            ->serialize();
-
-        $key = sprintf('dungeonMap$%s:%s', $point->getX(), $point->getY());
-        $this->redis->set($key, $value);
+            ->setAggregateId($domainEvent->getAggregateId());
+        $this->markTiles([$point], $value);
     }
 
     private function markRoomsAreaInMap(RoomWasCreatedEvent $domainEvent)
     {
         $value = (new DungeonMapTile())
             ->setUsage('Room')
-            ->setAggregateId($domainEvent->getAggregateId())
-            ->serialize();
+            ->setAggregateId($domainEvent->getAggregateId());
+        $this->markTiles($domainEvent->getArea(), $value);
+    }
 
-        foreach($domainEvent->getArea() as $point) {
+    /**
+     * @param Point[]|\Traversable $points
+     * @param DungeonMapTile $tile
+     */
+    private function markTiles($points, DungeonMapTile $tile)
+    {
+        foreach ($points as $point) {
             /** @var Point $point */
             $key = sprintf('dungeonMap$%s:%s', $point->getX(), $point->getY());
-            $this->redis->set($key, $value);
+            $this->redis->set($key, $tile->serialize());
         }
     }
 }
